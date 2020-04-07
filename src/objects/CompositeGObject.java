@@ -2,8 +2,10 @@ package objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 public class CompositeGObject extends GObject {
 
@@ -31,9 +33,39 @@ public class CompositeGObject extends GObject {
 			child.move(dX, dY);
 		}
 	}
+
+
 	
 	public void recalculateRegion() {
 		// TODO: Implement this method.
+		var minX = gObjects.get(0).x;
+		for (GObject gObject : gObjects) {
+			if (gObject.x < minX) {
+				minX = gObject.x;
+			}
+		}
+		var maxX = gObjects.get(0).x + gObjects.get(0).width;
+		for (GObject gObject : gObjects) {
+			if ( (gObject.x+gObject.height) > maxX) {
+				maxX = gObject.x+gObject.width;
+			}
+		}
+		var minY = gObjects.get(0).y;
+		for (GObject gObject : gObjects) {
+			if (gObject.y < minY) {
+				minY = gObject.y;
+			}
+		}
+		var maxY = gObjects.get(0).y + gObjects.get(0).height;
+		for (GObject gObject : gObjects) {
+			if ( (gObject.y+gObject.height) > maxY) {
+				maxY = gObject.y+gObject.height;
+			}
+		}
+		this.x = minX;
+		this.y = minY;
+		this.width = maxX-minX;
+		this.height = maxY- minY;
 	}
 
 	@Override
