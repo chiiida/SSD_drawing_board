@@ -23,20 +23,20 @@ public abstract class GObject {
 	}
 
 	public boolean pointerHit(int pointerX, int pointerY) {
-		// TODO: Implement this method.
-		return false;
+		return pointerX >= x && pointerX <= x + width && pointerY >= y && pointerY <= y + height;
 	}
 	
 	public void selected() {
-		// TODO: Implement this method.
+		this.selected = true;
 	}
 	
 	public void deselected() {
-		// TODO: Implement this method.
+		this.selected = false;
 	}
 	
 	public void move(int dX, int dY) {
-		// TODO: Implement this method.
+		this.x += dX;
+		this.y += dY;
 	}
 
 	public final void paint(Graphics g) {
@@ -48,7 +48,7 @@ public abstract class GObject {
 
 	public void paintRegion(Graphics g) {
 		/* Set color */
-		Color color = selected ? Color.red : Color.black;
+		Color color = selected ? Color.red : Color.gray;
 		g.setColor(color);
 		/* Set size */
 		int size = selected ? 3 : 1;
