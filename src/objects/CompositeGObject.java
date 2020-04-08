@@ -34,38 +34,24 @@ public class CompositeGObject extends GObject {
 		}
 	}
 
-
-	
 	public void recalculateRegion() {
-		// TODO: Implement this method.
-		var minX = gObjects.get(0).x;
-		for (GObject gObject : gObjects) {
-			if (gObject.x < minX) {
-				minX = gObject.x;
-			}
+		GObject firstChild = gObjects.get(0);
+		int maxX = 0;
+		int maxY = 0;
+		int minX = firstChild.x;
+		int minY = firstChild.y;
+
+		for (GObject child : gObjects) {
+			if (child.x + child.width > maxX) maxX = child.x + child.width;
+			if (child.x < minX) minX = child.x;
+			if (child.y + child.height > maxY) maxY = child.y + child.height;
+			if (child.y < minY) minY = child.y;
 		}
-		var maxX = gObjects.get(0).x + gObjects.get(0).width;
-		for (GObject gObject : gObjects) {
-			if ( (gObject.x+gObject.height) > maxX) {
-				maxX = gObject.x+gObject.width;
-			}
-		}
-		var minY = gObjects.get(0).y;
-		for (GObject gObject : gObjects) {
-			if (gObject.y < minY) {
-				minY = gObject.y;
-			}
-		}
-		var maxY = gObjects.get(0).y + gObjects.get(0).height;
-		for (GObject gObject : gObjects) {
-			if ( (gObject.y+gObject.height) > maxY) {
-				maxY = gObject.y+gObject.height;
-			}
-		}
+
 		this.x = minX;
 		this.y = minY;
-		this.width = maxX-minX;
-		this.height = maxY- minY;
+		this.width = maxX - minX;
+		this.height = maxY - minY;
 	}
 
 	@Override
